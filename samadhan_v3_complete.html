@@ -1,0 +1,1112 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+--border:#2a2a2a;--border2:#333;
+--text:#f0f0f0;--text2:#a0a0a0;--text3:#555;
+--green:#22c55e;--gd:#16a34a;--gbg:rgba(34,197,94,.08);--gbr:rgba(34,197,94,.2);
+--amber:#f59e0b;--abg:rgba(245,158,11,.08);--abr:rgba(245,158,11,.2);
+--red:#ef4444;--rbg:rgba(239,68,68,.08);--rbr:rgba(239,68,68,.2);
+--blue:#3b82f6;--bbg:rgba(59,130,246,.08);--bbr:rgba(59,130,246,.2);
+--purple:#a855f7;--pbg:rgba(168,85,247,.08);--pbr:rgba(168,85,247,.2);
+--r:10px;--rl:16px;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+.screen{display:none}.screen.active{display:block}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+.lmark{width:30px;height:30px;background:var(--green);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.lsub{font-size:10px;color:var(--text3);font-weight:400}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:var(--r);border:none;cursor:pointer;font-size:12px;font-weight:700;transition:all .15s;font-family:inherit;white-space:nowrap}
+.btn-g{background:var(--green);color:#000}.btn-g:hover{background:var(--gd)}
+.btn-o{background:transparent;color:var(--text2);border:1px solid var(--border2)}.btn-o:hover{color:var(--text);border-color:var(--text3)}
+.btn-r{background:var(--rbg);color:var(--red);border:1px solid var(--rbr)}
+.btn-b{background:var(--bbg);color:var(--blue);border:1px solid var(--bbr)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-full{width:100%;justify-content:center;padding:11px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:14px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.bg{background:var(--gbg);color:var(--green);border:1px solid var(--gbr)}
+.br{background:var(--rbg);color:var(--red);border:1px solid var(--rbr)}
+.ba{background:var(--abg);color:var(--amber);border:1px solid var(--abr)}
+.bb{background:var(--bbg);color:var(--blue);border:1px solid var(--bbr)}
+.bp{background:var(--pbg);color:var(--purple);border:1px solid var(--pbr)}
+.bx{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+input,select,textarea{width:100%;padding:9px 12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;color:var(--text);font-family:inherit;transition:border .15s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green)}
+input::placeholder,textarea::placeholder{color:var(--text3)}
+label{font-size:11px;font-weight:700;color:var(--text3);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.4px}
+.fg{margin-bottom:12px}
+.pg{display:flex;flex-direction:column;gap:0;padding-bottom:70px}
+.sec{padding:14px 16px}
+.sh{font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px}
+.divider{height:1px;background:var(--border);margin:12px 0}
+.tab-row{display:flex;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto}
+.tab{padding:9px 14px;font-size:12px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:all .15s}
+.tab.on{color:var(--green);border-bottom-color:var(--green)}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:11px;text-align:center}
+.sn{font-size:20px;font-weight:800;line-height:1}
+.sl{font-size:10px;color:var(--text3);margin-top:3px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px}
+.fbar{height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;margin:5px 0}
+.ff{height:100%;border-radius:3px;transition:width .6s}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--border);display:flex;z-index:99}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 2px;cursor:pointer;color:var(--text3);font-size:9px;gap:3px;border:none;background:none;font-family:inherit;transition:color .15s}
+.bn.on{color:var(--green)}
+.bn i{font-size:19px}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--bg3);color:var(--text);border:1px solid var(--border2);padding:9px 16px;border-radius:20px;font-size:12px;font-weight:600;z-index:999;display:none;white-space:nowrap;max-width:90vw}
+.tm{display:flex;flex-direction:column;gap:0}
+.ti{display:flex;gap:10px;position:relative}
+.ti:not(:last-child) .tl{position:absolute;left:9px;top:20px;bottom:0;width:1px;background:var(--border2)}
+.td{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;flex-shrink:0;z-index:1}
+.td-g{background:var(--green);color:#000}
+.td-b{background:var(--blue);color:#fff}
+.td-x{background:var(--bg3);color:var(--text3);border:1px solid var(--border2)}
+.tc{padding-bottom:12px;flex:1}
+.tt{font-size:12px;font-weight:700}
+.ts{font-size:10px;color:var(--text3)}
+.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+.tm-row{display:flex;align-items:center;gap:8px;padding:9px;background:var(--bg3);border-radius:var(--r);margin-bottom:5px;border:1px solid var(--border)}
+.prob-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:13px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.prob-card:hover{border-color:var(--border2)}
+.tr{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.verify-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700}
+.v-ok{background:var(--gbg);color:var(--green);border:1px solid var(--gbr)}
+.v-pend{background:var(--abg);color:var(--amber);border:1px solid var(--abr)}
+.v-rej{background:var(--rbg);color:var(--red);border:1px solid var(--rbr)}
+.hmap{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.hc{height:44px;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:800;cursor:pointer;transition:transform .1s;border:1px solid transparent}
+.hc:hover{transform:scale(1.06)}
+.hc-h{background:#3f1515;color:#ef4444;border-color:rgba(239,68,68,.2)}
+.hc-m{background:#2d2000;color:#f59e0b;border-color:rgba(245,158,11,.2)}
+.hc-l{background:#0a2d12;color:#22c55e;border-color:rgba(34,197,94,.2)}
+.hc-s{background:#3f1515;color:#ef4444;border-color:rgba(239,68,68,.5);animation:sos 1s infinite}
+@keyframes sos{0%,100%{border-color:rgba(239,68,68,.3)}50%{border-color:rgba(239,68,68,.9)}}
+.upload-box{background:var(--bg3);border:1.5px dashed var(--border2);border-radius:var(--r);padding:18px;text-align:center;cursor:pointer;transition:all .15s}
+.upload-box:hover,.upload-box.filled{border-color:var(--green);background:var(--gbg)}
+.ai-box{background:rgba(34,197,94,.05);border:1px solid var(--gbr);border-radius:var(--r);padding:12px;margin-top:8px;display:none}
+.ai-hdr{font-size:10px;font-weight:700;color:var(--green);margin-bottom:7px;display:flex;align-items:center;gap:5px;text-transform:uppercase;letter-spacing:.5px}
+.aib{width:4px;height:12px;background:var(--green);border-radius:1px;display:inline-block;animation:bl .7s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
+.map-box{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);height:110px;position:relative;overflow:hidden;display:none}
+.mg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:18px 18px}
+.mp{position:absolute;top:42%;left:48%;transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center}
+.mpd{width:11px;height:11px;background:var(--red);border-radius:50%;border:2px solid rgba(255,255,255,.3)}
+.mpp{position:absolute;top:42%;left:48%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;background:rgba(239,68,68,.12);animation:pp 1.5s infinite}
+@keyframes pp{to{transform:translate(-50%,-50%) scale(2.5);opacity:0}}
+.mpl{background:var(--bg);color:var(--text);font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;margin-top:3px;border:1px solid var(--border2)}
+.cert{background:var(--bg2);border:2px solid rgba(34,197,94,.35);border-radius:var(--rl);padding:18px;position:relative;overflow:hidden;text-align:center}
+.cert-bg{position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(34,197,94,.015),rgba(34,197,94,.015) 1px,transparent 1px,transparent 12px)}
+.cert-seal{width:40px;height:40px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:18px}
+.score-card{background:linear-gradient(135deg,#150a2e,#0a150a);border:1px solid rgba(168,85,247,.25);border-radius:var(--rl);padding:14px;margin-bottom:12px}
+.sr{width:65px;height:65px;border-radius:50%;border:3px solid rgba(168,85,247,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+.sr::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:3px solid transparent;border-top-color:var(--purple);border-right-color:var(--purple);transform:rotate(-30deg)}
+.pay-opt{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:11px;display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;cursor:pointer;transition:all .15s}
+.pay-opt:hover,.pay-opt.sel{border-color:var(--green);background:var(--gbg)}
+.inno-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.inno-row:last-child{border-bottom:none}
+.iico{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.vill-bar{background:var(--bg3);border-radius:var(--r);padding:10px;margin-bottom:6px}
+.alert-box{background:rgba(239,68,68,.07);border:1.5px solid rgba(239,68,68,.3);border-radius:var(--rl);padding:14px;margin-bottom:12px}
+.local-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:13px;margin-bottom:8px}
+.live-chip{display:inline-flex;align-items:center;gap:5px;background:var(--gbg);border:1px solid var(--gbr);border-radius:20px;padding:3px 10px;font-size:10px;font-weight:700;color:var(--green)}
+.ld{width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.3}}
+.public-prob{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:13px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div id="toast" class="toast"></div>
+
+<!-- ===== LANDING ===== -->
+<div id="s-land" class="screen active">
+  <div class="topbar">
+    <div class="logo"><div class="lmark">🌱</div><div><div>SamadhanHub</div><div class="lsub">Jharkhand Innovation Network</div></div></div>
+    <div style="display:flex;gap:6px"><button class="btn btn-o btn-sm" onclick="go('s-login')">Sign in</button><button class="btn btn-g btn-sm" onclick="go('s-register')">Register</button></div>
+  </div>
+  <div style="background:linear-gradient(160deg,#0d1f0d,#0a0a0a);padding:24px 16px 20px">
+    <div class="live-chip" style="margin-bottom:12px"><div class="ld"></div>Live — Jharkhand</div>
+    <div style="font-size:24px;font-weight:800;line-height:1.2;margin-bottom:8px">Community problems,<br><span style="color:var(--green)">real solutions</span></div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:16px">Citizens · Universities · Professionals · Industry · Govt</div>
+    <div style="display:flex;gap:8px"><button class="btn btn-g" onclick="go('s-submit')">+ Submit a problem</button><button class="btn btn-o" onclick="go('s-public-prob')">View problems</button></div>
+  </div>
+  <div class="sec">
+    <div class="g4" style="margin-bottom:16px">
+      <div class="stat"><div class="sn" style="color:var(--green)">1,247</div><div class="sl">Problems</div></div>
+      <div class="stat"><div class="sn" style="color:#22c55e">384</div><div class="sl">Solved</div></div>
+      <div class="stat"><div class="sn" style="color:var(--blue)">89</div><div class="sl">Universities</div></div>
+      <div class="stat"><div class="sn" style="color:var(--amber);font-size:15px">₹2.4Cr</div><div class="sl">Funded</div></div>
+    </div>
+    <div class="sh">Who are you?</div>
+    <div class="g2">
+      <div class="prob-card" onclick="loginAs('citizen')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">👤</div><div><div style="font-weight:700;font-size:13px">Public citizen</div><div style="font-size:10px;color:var(--text3)">Submit & donate</div></div></div>
+      <div class="prob-card" onclick="loginAs('student')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">📚</div><div><div style="font-weight:700;font-size:13px">Student</div><div style="font-size:10px;color:var(--text3)">Join projects</div></div></div>
+      <div class="prob-card" onclick="loginAs('university')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">🎓</div><div><div style="font-weight:700;font-size:13px">University</div><div style="font-size:10px;color:var(--text3)">Solve problems</div></div></div>
+      <div class="prob-card" onclick="loginAs('professional')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">💼</div><div><div style="font-weight:700;font-size:13px">Professional</div><div style="font-size:10px;color:var(--text3)">Paid field visits</div></div></div>
+      <div class="prob-card" onclick="loginAs('contractor')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">🔨</div><div><div style="font-weight:700;font-size:13px">Contractor</div><div style="font-size:10px;color:var(--text3)">Work contracts</div></div></div>
+      <div class="prob-card" onclick="loginAs('industry')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">🏭</div><div><div style="font-weight:700;font-size:13px">Industry</div><div style="font-size:10px;color:var(--text3)">Partner & fund</div></div></div>
+      <div class="prob-card" onclick="loginAs('local')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">🏘️</div><div><div style="font-weight:700;font-size:13px">Local authority</div><div style="font-size:10px;color:var(--text3)">Panchayat/Police</div></div></div>
+      <div class="prob-card" onclick="loginAs('ngo')" style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">❤️</div><div><div style="font-weight:700;font-size:13px">NGO / Media</div><div style="font-size:10px;color:var(--text3)">Raise & cover</div></div></div>
+      <div class="prob-card" style="grid-column:span 2" onclick="loginAs('govt')" style="display:flex;align-items:center;gap:8px;justify-content:center"><div style="font-size:22px">🏛️</div><div><div style="font-weight:700;font-size:13px">Government — Full access</div><div style="font-size:10px;color:var(--text3)">Analytics · Funding · Village SOS · Innovations</div></div></div>
+    </div>
+  </div>
+  <div class="bnav">
+    <button class="bn on" onclick="go('s-land')"><i class="ti ti-home"></i>Home</button>
+    <button class="bn" onclick="go('s-submit')"><i class="ti ti-plus-circle"></i>Submit</button>
+    <button class="bn" onclick="go('s-public-prob')"><i class="ti ti-list"></i>Problems</button>
+    <button class="bn" onclick="go('s-fund')"><i class="ti ti-coin"></i>Fund</button>
+    <button class="bn" onclick="go('s-register')"><i class="ti ti-user"></i>Profile</button>
+  </div>
+</div>
+
+<!-- ===== PUBLIC PROBLEMS ===== -->
+<div id="s-public-prob" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-land')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">All problems</div><div style="width:60px"></div></div>
+  <div class="pg sec">
+    <div style="display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px">
+      <button class="btn btn-g btn-sm">All</button>
+      <button class="btn btn-o btn-sm">Water</button>
+      <button class="btn btn-o btn-sm">Roads</button>
+      <button class="btn btn-o btn-sm">Health</button>
+      <button class="btn btn-o btn-sm">Energy</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <select style="flex:1"><option>All districts</option><option>Ranchi</option><option>Dhanbad</option><option>Bokaro</option></select>
+      <select style="flex:1"><option>All status</option><option>Open</option><option>In progress</option><option>Resolved</option></select>
+    </div>
+    <div class="public-prob">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Contaminated water — Ramgarh village</div><div class="tr"><span class="badge bb">Water</span><span class="badge br">Critical</span><span class="badge bx">Ramgarh</span><span class="badge bg">BIT Mesra assigned</span></div></div>
+        <span class="badge bg">Active</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px">2,400 people affected · Reported 3 days ago · Token: PRB-JH-2026-1847</div>
+      <div class="fbar"><div class="ff" style="width:78%;background:var(--green)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><span>₹39,000 / ₹50,000</span><span style="color:var(--green);font-weight:700">78% funded</span></div>
+      <div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-g btn-sm" onclick="go('s-fund')">Donate</button><button class="btn btn-o btn-sm" onclick="toast('Problem details opened')">Details</button></div>
+    </div>
+    <div class="public-prob">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Broken road — 3km, Hazaribagh school route</div><div class="tr"><span class="badge ba">Roads</span><span class="badge ba">High</span><span class="badge bx">Hazaribagh</span><span class="badge bg">Contractor assigned</span></div></div>
+        <span class="badge ba">In progress</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px">400 children affected · Reported 5 days ago · Token: PRB-JH-2026-1623</div>
+      <div class="fbar"><div class="ff" style="width:45%;background:var(--amber)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><span>₹22,500 / ₹50,000</span><span style="color:var(--amber);font-weight:700">45% funded</span></div>
+      <div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-g btn-sm" onclick="go('s-fund')">Donate</button><button class="btn btn-o btn-sm">Details</button></div>
+    </div>
+    <div class="public-prob">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">No electricity — Bokaro remote village (6 days)</div><div class="tr"><span class="badge br">Energy</span><span class="badge br">Critical</span><span class="badge bx">Bokaro</span></div></div>
+        <span class="badge br">Open</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px">1,800 people affected · Reported yesterday</div>
+      <div class="fbar"><div class="ff" style="width:22%;background:var(--red)"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><span>₹11,000 / ₹50,000</span><span style="color:var(--red);font-weight:700">22% funded</span></div>
+      <div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-g btn-sm" onclick="go('s-fund')">Donate</button><button class="btn btn-o btn-sm">Details</button></div>
+    </div>
+    <div class="public-prob" style="border-color:var(--gbr)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Dirty borewell water — Lohardaga village</div><div class="tr"><span class="badge bb">Water</span><span class="badge bx">Lohardaga</span></div></div>
+        <span class="badge bg">✓ Resolved</span>
+      </div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px">1,200 people helped · Solved by BIT Mesra in 6 weeks</div>
+      <div style="font-size:11px;color:var(--green);font-weight:600">Before: Dirty water daily → After: Clean 24/7 supply ✓</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REGISTER ===== -->
+<div id="s-register" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-land')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Create account</div><div style="width:60px"></div></div>
+  <div class="pg sec">
+    <div style="font-size:12px;color:var(--text3);margin-bottom:12px">Choose your role — account will be verified accordingly</div>
+    <div style="display:flex;flex-direction:column;gap:7px">
+      <div class="prob-card" onclick="loginAs('citizen')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">👤</div><div><div style="font-weight:700">Public citizen</div><div style="font-size:11px;color:var(--text3)">Submit · Donate · Track · Tax certificate</div><div class="verify-badge v-ok" style="margin-top:4px">✓ Phone OTP verified</div></div></div>
+      <div class="prob-card" onclick="loginAs('student')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">📚</div><div><div style="font-weight:700">Student (any domain)</div><div style="font-size:11px;color:var(--text3)">Engg · Medical · Agri · Business · Law · Teaching</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ University verification required</div></div></div>
+      <div class="prob-card" onclick="loginAs('university')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">🎓</div><div><div style="font-weight:700">University / HEI</div><div style="font-size:11px;color:var(--text3)">Form teams · Assign faculty · Submit proposals</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ Govt. verification required</div></div></div>
+      <div class="prob-card" onclick="loginAs('professional')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">💼</div><div><div style="font-weight:700">Professional</div><div style="font-size:11px;color:var(--text3)">Engineer · Doctor · Lawyer · Architect</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ License + Govt. verification</div></div></div>
+      <div class="prob-card" onclick="loginAs('contractor')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">🔨</div><div><div style="font-weight:700">Contractor</div><div style="font-size:11px;color:var(--text3)">Road · Borewell · Drain · Construction</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ Govt. license verification</div></div></div>
+      <div class="prob-card" onclick="loginAs('industry')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">🏭</div><div><div style="font-weight:700">Industry / Startup / CSR</div><div style="font-size:11px;color:var(--text3)">Mentor · Sponsor · Prototype · Commercialize</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ GSTIN + Govt. verification</div></div></div>
+      <div class="prob-card" onclick="loginAs('local')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">🏘️</div><div><div style="font-weight:700">Local authority</div><div style="font-size:11px;color:var(--text3)">Panchayat · Police station · BDO office</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ Govt. office verification</div></div></div>
+      <div class="prob-card" onclick="loginAs('ngo')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">❤️</div><div><div style="font-weight:700">NGO / Media</div><div style="font-size:11px;color:var(--text3)">Raise issues · Coverage · Donate</div><div class="verify-badge v-pend" style="margin-top:4px">⏳ Registration certificate required</div></div></div>
+      <div class="prob-card" onclick="loginAs('govt')" style="display:flex;align-items:center;gap:10px"><div style="font-size:24px">🏛️</div><div><div style="font-weight:700">Government</div><div style="font-size:11px;color:var(--text3)">Full access · All data · Fund release</div><div class="verify-badge v-ok" style="margin-top:4px">✓ Govt. ID + Aadhaar verified</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SUBMIT PROBLEM ===== -->
+<div id="s-submit" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-land')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Submit a problem</div><div style="width:60px"></div></div>
+  <div class="pg sec">
+    <div class="card">
+      <div class="fg"><label>Problem title</label><input type="text" id="pt" placeholder="e.g. No clean water in our village" oninput="aiRun()"/></div>
+      <div class="fg"><label>Description</label><textarea id="pd" rows="3" placeholder="What's happening? How many affected? Since when?" oninput="aiRun()"></textarea></div>
+      <div id="ai-box" class="ai-box">
+        <div class="ai-hdr">🤖 AI classification <span id="aib" class="aib"></span></div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px"><span id="ac" class="badge bb"></span><span id="ap" class="badge"></span><span id="ar" class="badge bg" style="display:none">Smart routed ✓</span></div>
+        <div id="aw" style="font-size:11px;color:var(--text2)"></div>
+        <div id="at" style="font-size:11px;color:var(--green);font-weight:700;margin-top:4px"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="fg">
+        <label>Photo</label>
+        <div class="upload-box" id="phb" onclick="document.getElementById('phi').click()">
+          <div style="font-size:22px;margin-bottom:5px">📷</div>
+          <div style="font-size:11px;color:var(--text3)" id="phl">Tap to upload photo</div>
+          <img id="php" style="display:none;width:100%;height:80px;object-fit:cover;border-radius:7px;margin-top:8px"/>
+        </div>
+        <input type="file" id="phi" accept="image/*" style="display:none" onchange="prevPh(this)"/>
+      </div>
+      <div class="fg">
+        <label>Video <span style="color:var(--text3);font-weight:400;text-transform:none">(optional)</span></label>
+        <div class="upload-box" id="vb" onclick="document.getElementById('vi').click()">
+          <div style="font-size:22px;margin-bottom:5px">🎥</div>
+          <div style="font-size:11px;color:var(--text3)" id="vl">Tap to upload video</div>
+        </div>
+        <input type="file" id="vi" accept="video/*" style="display:none" onchange="prevVid(this)"/>
+      </div>
+    </div>
+    <div class="card">
+      <div class="fg">
+        <label>Location</label>
+        <div style="display:flex;gap:7px;margin-bottom:7px">
+          <button class="btn btn-o" style="flex:1;justify-content:center" id="gpsb" onclick="getGps()"><i class="ti ti-location"></i> GPS location</button>
+          <select style="flex:1" id="dsel"><option value="">District</option><option>Ranchi</option><option>Dhanbad</option><option>Bokaro</option><option>Hazaribagh</option><option>Giridih</option><option>Ramgarh</option><option>Dumka</option><option>Gumla</option><option>Simdega</option><option>West Singhbhum</option></select>
+        </div>
+        <div id="gok" style="display:none;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r);padding:7px 11px;font-size:11px;color:var(--green);font-weight:700;margin-bottom:7px">✅ <span id="gtxt"></span></div>
+        <div class="map-box" id="mb"><div class="mg"></div><div class="mpp"></div><div class="mp"><div class="mpd"></div><div class="mpl" id="ml">Locating...</div></div></div>
+      </div>
+      <div class="fg"><label>People affected</label><input type="number" placeholder="e.g. 500" min="1"/></div>
+    </div>
+    <button class="btn btn-g btn-full" onclick="submitProb()"><i class="ti ti-send"></i> Submit problem</button>
+  </div>
+</div>
+
+<!-- ===== TOKEN ===== -->
+<div id="s-token" class="screen">
+  <div class="topbar"><div></div><div style="font-weight:700">Submitted!</div><div></div></div>
+  <div class="pg sec" style="text-align:center">
+    <div style="font-size:48px;margin:16px 0 8px">✅</div>
+    <div style="font-size:18px;font-weight:800;margin-bottom:4px">Problem registered!</div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:18px">AI verified and categorized your problem</div>
+    <div style="background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--rl);padding:14px;margin-bottom:16px">
+      <div style="font-size:10px;color:var(--text3);margin-bottom:3px">Problem token</div>
+      <div style="font-size:21px;font-weight:800;color:var(--green);letter-spacing:1px" id="tok">PRB-JH-2026-1847</div>
+    </div>
+    <div class="card" style="text-align:left">
+      <div class="sh" style="margin-bottom:10px">What happens next</div>
+      <div class="tm">
+        <div class="ti"><div class="tl"></div><div class="td td-g">✓</div><div class="tc"><div class="tt">Submitted</div><div class="ts">Just now</div></div></div>
+        <div class="ti"><div class="tl"></div><div class="td td-g">✓</div><div class="tc"><div class="tt">AI classified & routed</div><div class="ts">Automatic</div></div></div>
+        <div class="ti"><div class="tl"></div><div class="td td-b">→</div><div class="tc"><div class="tt">University + Industry notified</div><div class="ts">Within 24 hours</div></div></div>
+        <div class="ti"><div class="tl"></div><div class="td td-x"></div><div class="tc"><div class="tt" style="color:var(--text3)">Team assigned</div><div class="ts">1–3 days</div></div></div>
+        <div class="ti"><div class="td td-x"></div><div class="tc"><div class="tt" style="color:var(--text3)">Solution → Deploy → Impact</div><div class="ts">2–12 weeks</div></div></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px"><button class="btn btn-g" style="flex:1;justify-content:center" onclick="go('s-fund')">View funding</button><button class="btn btn-o" style="flex:1;justify-content:center" onclick="go('s-land')">Home</button></div>
+  </div>
+</div>
+
+<!-- ===== FUND ===== -->
+<div id="s-fund" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-land')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Funding tracker</div><div></div></div>
+  <div class="pg sec">
+    <div class="card" style="border-color:var(--gbr)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:5px">Contaminated water — Ramgarh village</div><div class="tr"><span class="badge bb">Water</span><span class="badge br">Critical</span><span class="badge bx">2,400 people</span></div></div>
+        <span class="badge bg">Active</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>₹39,000 of ₹50,000</span><span style="color:var(--green)">78%</span></div>
+      <div class="fbar" style="height:6px;margin-bottom:10px"><div class="ff" style="width:78%;background:var(--green)"></div></div>
+      <div style="background:var(--bg3);border-radius:var(--r);margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;padding:9px 11px;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--text2)">👥 Public (247 donors)</span><span style="font-weight:700;color:var(--green)">₹15,000</span></div>
+        <div style="display:flex;justify-content:space-between;padding:9px 11px;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--text2)">🏘️ Panchayat office</span><span style="font-weight:700;color:var(--blue)">₹20,000</span></div>
+        <div style="display:flex;justify-content:space-between;padding:9px 11px;border-bottom:1px solid var(--border);font-size:12px"><span style="color:var(--text2)">🏛️ State government</span><span style="font-weight:700;color:var(--amber)">₹4,000</span></div>
+        <div style="display:flex;justify-content:space-between;padding:9px 11px;font-size:12px"><span style="color:var(--text2)">❤️ NGO pending</span><span style="font-weight:700;color:var(--text3)">₹0</span></div>
+      </div>
+      <div class="g2" style="margin-bottom:10px">
+        <div style="background:var(--bg3);border-radius:var(--r);padding:9px"><div style="font-size:10px;color:var(--text3)">University</div><div style="font-weight:700;font-size:12px">BIT Mesra</div></div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:9px"><div style="font-size:10px;color:var(--text3)">Media coverage</div><div style="font-weight:700;font-size:12px">2 outlets</div></div>
+      </div>
+      <div style="display:flex;gap:7px"><button class="btn btn-g" style="flex:1;justify-content:center" onclick="openDonate()">Donate now</button><button class="btn btn-o btn-sm" onclick="toast('Link copied!')">Share</button></div>
+    </div>
+    <div id="dbox" style="display:none" class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:10px">Choose amount</div>
+      <div class="g4" style="margin-bottom:10px">
+        <button class="btn btn-o btn-sm" onclick="setAmt(500)">₹500</button>
+        <button class="btn btn-o btn-sm" onclick="setAmt(1000)">₹1K</button>
+        <button class="btn btn-o btn-sm" onclick="setAmt(5000)">₹5K</button>
+        <button class="btn btn-o btn-sm" onclick="setAmt(10000)">₹10K</button>
+      </div>
+      <div class="fg"><label>Custom amount</label><input type="number" id="da" placeholder="₹ Enter amount" oninput="upTax()"/></div>
+      <div id="tbox" style="display:none;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r);padding:10px;margin-bottom:10px;font-size:12px">
+        <div style="font-weight:700;color:var(--green);margin-bottom:5px">Tax benefit (state govt. 80G equivalent)</div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="color:var(--text2)">Your donation</span><span id="td1">₹0</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="color:var(--text2)">Tax rebate (30%)</span><span id="tr1" style="color:var(--green);font-weight:700">₹0</span></div>
+        <div style="height:1px;background:var(--gbr);margin:5px 0"></div>
+        <div style="display:flex;justify-content:space-between"><span style="font-weight:700">Net cost to you</span><span id="tn1" style="font-weight:700">₹0</span></div>
+      </div>
+      <button class="btn btn-g btn-full" onclick="confirmDonate()"><i class="ti ti-receipt"></i> Pay & get Govt certificate</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DONOR CERT ===== -->
+<div id="s-cert" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-land')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Your certificate</div><div></div></div>
+  <div class="pg sec">
+    <div class="cert">
+      <div class="cert-bg"></div>
+      <div style="position:relative">
+        <div class="cert-seal">🌱</div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:.5px;margin-bottom:2px">GOVERNMENT OF JHARKHAND</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:8px">SamadhanHub Innovation Portal</div>
+        <div style="font-size:14px;font-weight:800">Certificate of Social Contribution</div>
+        <div class="divider"></div>
+        <div style="font-size:11px;color:var(--text3)">This certifies that</div>
+        <div style="font-size:17px;font-weight:800;color:var(--green);margin:3px 0" id="cn">Ramesh Kumar</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:4px">has contributed</div>
+        <div style="font-size:24px;font-weight:800;margin-bottom:3px" id="ca">₹5,000</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:10px">towards "Clean Drinking Water — Ramgarh"</div>
+        <div style="background:var(--gbg);border:1px solid var(--gbr);border-radius:8px;padding:9px;margin-bottom:10px">
+          <div style="font-size:10px;color:var(--text3)">Tax rebate eligible</div>
+          <div style="font-size:19px;font-weight:800;color:var(--green)" id="cr">₹1,500</div>
+          <div style="font-size:10px;color:var(--text3)">Claim while filing state tax return — Cert no. enclosed</div>
+        </div>
+        <div class="g3" style="margin-bottom:10px">
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:14px;font-weight:800" id="crk">🥈</div><div style="font-size:9px;color:var(--text3)">Rank</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:11px;font-weight:700">09 Sep<br>2026</div><div style="font-size:9px;color:var(--text3)">Date</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:9px;color:var(--text3)">DON-JH-2026-847</div><div style="font-size:9px;color:var(--text3)">Cert no.</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text3)"><div>Digitally signed<br>Chief Secretary, JH</div><div style="font-size:16px">🔏</div></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:7px;margin-top:12px"><button class="btn btn-g" style="flex:1;justify-content:center" onclick="toast('Certificate downloaded!')"><i class="ti ti-download"></i> Download PDF</button><button class="btn btn-o" style="flex:1;justify-content:center" onclick="toast('Shared!')">Share</button></div>
+  </div>
+</div>
+
+<!-- ===== STUDENT ===== -->
+<div id="s-student" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">📚</div><div><div>Student portal</div><div class="lsub">Rahul Kumar · CSE · NIT Jamshedpur</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div class="score-card">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="sr"><div style="font-size:17px;font-weight:800;color:var(--purple)">2,840</div><div style="font-size:9px;color:var(--text3)">pts</div></div>
+        <div style="flex:1"><div style="font-size:10px;color:var(--text3);margin-bottom:2px">Rank</div><div style="font-size:15px;font-weight:800;color:var(--purple);margin-bottom:5px">🏆 Change Maker</div><div style="display:flex;gap:4px;flex-wrap:wrap"><span class="badge bp">3 projects</span><span class="badge bp">2 certs</span><span class="badge bp">6 field visits</span></div></div>
+      </div>
+    </div>
+    <div style="background:var(--abg);border:1px solid var(--abr);border-radius:var(--r);padding:10px;margin-bottom:12px;font-size:12px">
+      <div style="font-weight:700;color:var(--amber);margin-bottom:3px">⏳ Account pending university verification</div>
+      <div style="color:var(--text2)">Your university (NIT Jamshedpur) needs to verify your enrollment. Pending since 2 days.</div>
+    </div>
+    <div class="tab-row">
+      <div class="tab on" onclick="stTab('open')">Open projects</div>
+      <div class="tab" onclick="stTab('mine')">My projects</div>
+      <div class="tab" onclick="stTab('cert')">Certificates</div>
+      <div class="tab" onclick="stTab('field')">Field visits</div>
+    </div>
+    <div id="st-open">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:5px">Smart water monitoring — Ramgarh</div>
+        <div class="tr" style="margin-bottom:8px"><span class="badge bb">IoT</span><span class="badge bg">Team forming</span><span class="badge bp">+400 pts</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Cross-university: BIT Mesra + BAU Ranchi + NIT JSR. Build real-time water quality sensor.</div>
+        <div style="background:var(--bg3);border-radius:var(--r);padding:9px;margin-bottom:8px">
+          <div style="font-size:10px;font-weight:700;color:var(--text3);margin-bottom:6px">TEAM MEMBERS</div>
+          <div class="tm-row"><div class="av" style="background:var(--gbg);color:var(--green)">RK</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Rohan — BAU Ranchi</div><div style="font-size:10px;color:var(--text3)">Agriculture</div></div><span class="badge bg" style="font-size:9px">Online</span></div>
+          <div class="tm-row"><div class="av" style="background:var(--bbg);color:var(--blue)">PS</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Priya — BIT Mesra</div><div style="font-size:10px;color:var(--text3)">Civil Engg</div></div><span class="badge bg" style="font-size:9px">Online</span></div>
+          <div style="border:1.5px dashed var(--border2);border-radius:var(--r);padding:7px;text-align:center;font-size:11px;color:var(--text3)">+ CSE student needed — join!</div>
+        </div>
+        <div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="joinProj()">Join project</button><button class="btn btn-o btn-sm" onclick="toast('Details opened')">Details</button></div>
+      </div>
+    </div>
+    <div id="st-mine" style="display:none">
+      <div class="card" style="border-left:3px solid var(--green)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px"><div style="font-weight:700">Water quality sensor app</div><span class="badge bg">Done</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:7px">Ramgarh · BIT Mesra · 3 months</div>
+        <div style="font-size:12px;margin-bottom:5px">2,400 people benefited · Tata Projects interested</div>
+        <div style="font-size:12px;color:var(--purple);font-weight:700;margin-bottom:8px">+840 pts earned</div>
+        <button class="btn btn-o btn-sm" onclick="go('s-stcert')">View certificate</button>
+      </div>
+    </div>
+    <div id="st-cert" style="display:none">
+      <div class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:6px">🏅</div>
+        <div style="font-weight:700;margin-bottom:3px">Project Completion Certificate</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:7px">Water quality sensor — Ramgarh<br>BIT Mesra + Govt of Jharkhand</div>
+        <div class="tr" style="justify-content:center;margin-bottom:10px"><span class="badge bg">Govt verified</span><span class="badge bp">Industry visible</span><span class="badge bb">NEP 2020 credit</span></div>
+        <button class="btn btn-g btn-sm" onclick="toast('Downloaded!')"><i class="ti ti-download"></i> Download</button>
+      </div>
+    </div>
+    <div id="st-field" style="display:none">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">Water testing — Ramgarh (1 day)</div>
+        <div class="tr" style="margin-bottom:7px"><span class="badge bb">1 day</span><span class="badge bg">₹800 travel</span><span class="badge bp">+100 pts</span><span class="badge bx">Transport arranged</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Collect samples, run tests, document. Govt supervised.</div>
+        <button class="btn btn-g btn-sm" onclick="toast('Applied! You will be notified within 24hrs.')">Apply</button>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">Agricultural survey — Giridih (3 days)</div>
+        <div class="tr" style="margin-bottom:7px"><span class="badge ba">3 days</span><span class="badge bg">₹2,400 + free stay</span><span class="badge bp">+350 pts</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Survey 15 farms. Block guesthouse arranged.</div>
+        <button class="btn btn-o btn-sm" onclick="toast('Applied!')">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STUDENT CERT ===== -->
+<div id="s-stcert" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-student')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Achievement</div><div></div></div>
+  <div class="pg sec">
+    <div class="cert">
+      <div class="cert-bg"></div>
+      <div style="position:relative;text-align:center">
+        <div class="cert-seal">🏅</div>
+        <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:.5px">GOVERNMENT OF JHARKHAND</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:7px">Student Innovation Certificate</div>
+        <div style="font-size:14px;font-weight:800;margin-bottom:4px">Student Innovation Certificate</div>
+        <div class="divider"></div>
+        <div style="font-size:17px;font-weight:800;color:var(--green)">Rahul Kumar</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px">NIT Jamshedpur · Computer Science</div>
+        <div style="background:var(--bg3);border-radius:8px;padding:9px;margin-bottom:9px;border:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--text3)">Completed</div>
+          <div style="font-size:13px;font-weight:700">Water Quality Monitoring System</div>
+          <div style="font-size:10px;color:var(--text3)">Ramgarh · 3 months</div>
+        </div>
+        <div class="g3" style="margin-bottom:9px">
+          <div style="background:var(--bg3);border-radius:6px;padding:7px"><div style="font-size:13px;font-weight:800;color:var(--green)">2,400</div><div style="font-size:9px;color:var(--text3)">helped</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px"><div style="font-size:13px;font-weight:800;color:var(--purple)">840</div><div style="font-size:9px;color:var(--text3)">pts</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px"><div style="font-size:13px;font-weight:800;color:var(--amber)">A+</div><div style="font-size:9px;color:var(--text3)">grade</div></div>
+        </div>
+        <div class="tr" style="justify-content:center"><span class="badge bg">Govt verified</span><span class="badge bp">Industry visible</span><span class="badge bb">NEP credit</span></div>
+      </div>
+    </div>
+    <div style="background:var(--abg);border:1px solid var(--abr);border-radius:var(--r);padding:10px;margin:10px 0;font-size:12px">
+      <div style="font-weight:700;color:var(--amber)">🏭 Tata Projects interested!</div>
+      <div style="color:var(--text2);margin-top:3px">They viewed your certificate. Internship offer may follow.</div>
+    </div>
+    <div style="display:flex;gap:7px"><button class="btn btn-g" style="flex:1;justify-content:center" onclick="toast('Downloaded!')"><i class="ti ti-download"></i> Download</button><button class="btn btn-o" style="flex:1;justify-content:center" onclick="toast('Shared!')">Share</button></div>
+  </div>
+</div>
+
+<!-- ===== PROFESSIONAL ===== -->
+<div id="s-professional" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">💼</div><div><div>Professional portal</div><div class="lsub">Er. Amit Singh · Civil Engineer</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div style="background:var(--bbg);border:1px solid var(--bbr);border-radius:var(--r);padding:10px;margin-bottom:12px">
+      <div style="font-weight:700;color:var(--blue);margin-bottom:2px">💼 How payment works</div>
+      <div style="font-size:12px;color:var(--text2)">Govt-sent project: Rate decided by government (₹1,500–₹3,000/day)<br>Contractor project: Rate negotiated with contractor<br>University project: Travel allowance + honorary certificate</div>
+    </div>
+    <div class="sh">Projects matching — Civil Engineering</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">
+        <div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Road condition assessment — Hazaribagh</div><div class="tr"><span class="badge ba">Roads</span><span class="badge bg">₹2,500/day</span><span class="badge bb">Govt funded</span></div></div>
+      </div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">2-day site visit. Assess 3km road damage. Write technical report for PWD. Travel + accommodation arranged.</div>
+      <div style="background:var(--bg3);border-radius:var(--r);padding:9px;margin-bottom:8px;font-size:12px">
+        <div style="font-weight:700;margin-bottom:3px">Payment details</div>
+        <div style="display:flex;justify-content:space-between;color:var(--text2);margin-bottom:2px"><span>Rate</span><span style="color:var(--green);font-weight:700">₹2,500/day</span></div>
+        <div style="display:flex;justify-content:space-between;color:var(--text2);margin-bottom:2px"><span>Duration</span><span>2 days</span></div>
+        <div style="display:flex;justify-content:space-between;color:var(--text2);margin-bottom:2px"><span>Total</span><span style="font-weight:700;color:var(--green)">₹5,000</span></div>
+        <div style="display:flex;justify-content:space-between;color:var(--text2)"><span>Paid by</span><span>Govt (escrow release on completion)</span></div>
+      </div>
+      <button class="btn btn-g btn-sm" onclick="toast('Applied! Govt will confirm within 3 days.')">Apply for field visit</button>
+    </div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Borewell site survey — Gumla</div>
+      <div class="tr" style="margin-bottom:7px"><span class="badge bb">Water</span><span class="badge ba">₹1,800/day</span><span class="badge bx">Contractor project</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">Contractor Singh Brothers needs certified civil engineer for 1-day groundwater assessment. Rate negotiable.</div>
+      <button class="btn btn-o btn-sm" onclick="toast('Negotiation request sent to contractor!')">Negotiate & apply</button>
+    </div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Water drainage design — Dumka</div>
+      <div class="tr" style="margin-bottom:7px"><span class="badge bb">Drainage</span><span class="badge bg">Honorary + cert</span><span class="badge bp">University project</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">BIT Mesra team needs expert review. No pay, but Govt. recognition certificate + industry visibility.</div>
+      <button class="btn btn-o btn-sm" onclick="toast('Volunteered! University team notified.')">Volunteer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONTRACTOR ===== -->
+<div id="s-contractor" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">🔨</div><div><div>Contractor portal</div><div class="lsub">Singh Brothers Construction</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div class="g3" style="margin-bottom:14px">
+      <div class="stat"><div class="sn" style="color:var(--green)">3</div><div class="sl">Active</div></div>
+      <div class="stat"><div class="sn" style="color:var(--amber)">7</div><div class="sl">Completed</div></div>
+      <div class="stat"><div class="sn" style="color:var(--blue)">₹18L</div><div class="sl">Earned</div></div>
+    </div>
+    <div class="sh">Open work contracts</div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Road repair — 3km, Hazaribagh school</div>
+      <div class="tr" style="margin-bottom:7px"><span class="badge ba">Road work</span><span class="badge bg">Contract open</span><span class="badge bx">5 applied</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:4px">Budget: <strong style="color:var(--text)">₹8,00,000</strong> · Deadline: 45 days</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Supervised by: Civil students, BIT Mesra · Govt verified contract</div>
+      <button class="btn btn-g btn-sm" onclick="contrApply()">Apply for contract</button>
+    </div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">New borewell — 3 locations, Gumla</div>
+      <div class="tr" style="margin-bottom:7px"><span class="badge bb">Borewell</span><span class="badge bg">Open</span><span class="badge bx">2 applied</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Budget: <strong style="color:var(--text)">₹2,50,000</strong> · Deadline: 30 days</div>
+      <button class="btn btn-o btn-sm" onclick="contrApply()">Apply</button>
+    </div>
+    <div class="card">
+      <div style="font-size:13px;font-weight:700;margin-bottom:4px">Drainage — Dumka ward 4</div>
+      <div class="tr" style="margin-bottom:7px"><span class="badge bb">Drainage</span><span class="badge ba">Closes 3 days</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Budget: <strong style="color:var(--text)">₹3,80,000</strong> · Deadline: 60 days</div>
+      <button class="btn btn-o btn-sm" onclick="contrApply()">Apply</button>
+    </div>
+    <div id="cok" style="display:none;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--rl);padding:13px;text-align:center">
+      <div style="font-size:18px;margin-bottom:5px">✅</div>
+      <div style="font-size:13px;font-weight:700;color:var(--green)">Application submitted!</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:3px">Notified within 7 days.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== UNIVERSITY ===== -->
+<div id="s-univ" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">🎓</div><div><div>University portal</div><div class="lsub">BIT Mesra</div></div></div><div class="verify-badge v-ok">✓ Govt verified</div></div>
+  <div class="pg sec">
+    <div class="g3" style="margin-bottom:14px">
+      <div class="stat"><div class="sn">12</div><div class="sl">Assigned</div></div>
+      <div class="stat"><div class="sn" style="color:var(--blue)">7</div><div class="sl">Active</div></div>
+      <div class="stat"><div class="sn" style="color:var(--green)">3</div><div class="sl">Solved</div></div>
+    </div>
+    <div class="sh">Student verification queue</div>
+    <div class="card" style="margin-bottom:12px">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Students pending your verification</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:9px;background:var(--bg3);border-radius:var(--r);margin-bottom:5px">
+        <div><div style="font-size:12px;font-weight:700">Rahul Kumar — CSE 3rd year</div><div style="font-size:10px;color:var(--text3)">Roll: 21CS087 · Registered 2 days ago</div></div>
+        <div style="display:flex;gap:5px"><button class="btn btn-g btn-sm" onclick="toast('Rahul Kumar verified!')">✓ Verify</button><button class="btn btn-r btn-sm" onclick="toast('Rejected')">✗</button></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:9px;background:var(--bg3);border-radius:var(--r)">
+        <div><div style="font-size:12px;font-weight:700">Priya Sinha — Civil 2nd year</div><div style="font-size:10px;color:var(--text3)">Roll: 22CE034 · Registered yesterday</div></div>
+        <div style="display:flex;gap:5px"><button class="btn btn-g btn-sm" onclick="toast('Priya Sinha verified!')">✓ Verify</button><button class="btn btn-r btn-sm">✗</button></div>
+      </div>
+    </div>
+    <div class="sh">Assigned problems</div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px"><div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Contaminated water — Ramgarh</div><div class="tr"><span class="badge bb">Water</span><span class="badge br">Critical</span></div></div><span class="badge bg">Team active</span></div>
+      <div style="font-size:10px;font-weight:700;color:var(--text3);margin-bottom:7px;text-transform:uppercase">AI smart routing</div>
+      <div style="background:var(--bg3);border-radius:var(--r);padding:9px;margin-bottom:9px;font-size:11px">
+        <div style="display:flex;gap:5px;align-items:center;margin-bottom:5px"><span style="background:var(--gbg);color:var(--green);padding:2px 5px;border-radius:3px;font-size:9px;font-weight:700;border:1px solid var(--gbr)">UNI</span>BIT Mesra — Civil + Environmental</div>
+        <div style="display:flex;gap:5px;align-items:center;margin-bottom:5px"><span style="background:var(--bbg);color:var(--blue);padding:2px 5px;border-radius:3px;font-size:9px;font-weight:700;border:1px solid var(--bbr)">IND</span>ColdStar Ltd — nearest cold storage</div>
+        <div style="display:flex;gap:5px;align-items:center"><span style="background:var(--abg);color:var(--amber);padding:2px 5px;border-radius:3px;font-size:9px;font-weight:700;border:1px solid var(--abr)">GOVT</span>Agriculture Dept — PM Cold Chain</div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--text3);margin-bottom:7px;text-transform:uppercase">Cross-university team</div>
+      <div class="tm-row"><div class="av" style="background:var(--gbg);color:var(--green)">RS</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Rohan — BAU Ranchi</div><div style="font-size:10px;color:var(--text3)">Agriculture</div></div><span class="badge bg" style="font-size:9px">Lead</span></div>
+      <div class="tm-row"><div class="av" style="background:var(--bbg);color:var(--blue)">PS</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Priya — BIT Mesra</div><div style="font-size:10px;color:var(--text3)">Civil Engg</div></div></div>
+      <div class="tm-row"><div class="av" style="background:var(--pbg);color:var(--purple)">RK</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Rahul — NIT JSR</div><div style="font-size:10px;color:var(--text3)">CSE / IoT</div></div></div>
+      <div class="tm-row"><div class="av" style="background:var(--abg);color:var(--amber)">SD</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Sneha — Xavier</div><div style="font-size:10px;color:var(--text3)">Business</div></div></div>
+      <div class="tm-row"><div class="av" style="background:var(--rbg);color:var(--red)">Dr</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Dr. A. Sharma — BIT Mesra</div><div style="font-size:10px;color:var(--text3)">Faculty mentor</div></div><span class="badge bb" style="font-size:9px">Mentor</span></div>
+      <div style="display:flex;gap:6px;margin-top:9px"><button class="btn btn-g btn-sm" onclick="toast('Project room opened!')">Project room</button><button class="btn btn-o btn-sm" onclick="toast('Report submitted!')">Submit report</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INDUSTRY ===== -->
+<div id="s-industry" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">🏭</div><div><div>Industry portal</div><div class="lsub">Tata Projects Ltd.</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div class="g4" style="margin-bottom:14px">
+      <div class="stat"><div class="sn" style="color:var(--green)">4</div><div class="sl">Active</div></div>
+      <div class="stat"><div class="sn" style="color:var(--amber)">₹24L</div><div class="sl">Invested</div></div>
+      <div class="stat"><div class="sn" style="color:var(--blue)">12</div><div class="sl">Inno. seen</div></div>
+      <div class="stat"><div class="sn" style="color:var(--purple)">3</div><div class="sl">Patents</div></div>
+    </div>
+    <div class="tab-row">
+      <div class="tab on" onclick="indTab('disc')">Discover</div>
+      <div class="tab" onclick="indTab('inno')">Student innovations</div>
+      <div class="tab" onclick="indTab('actv')">My active</div>
+    </div>
+    <div id="ind-disc">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Choose how you want to participate</div>
+      <div class="g2" style="margin-bottom:14px">
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">🧑‍🏫 Mentor</div><div style="font-size:10px;color:var(--text3)">Send engineers</div></div></div>
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">💰 Sponsor</div><div style="font-size:10px;color:var(--text3)">Fund project</div></div></div>
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">🔧 Tech partner</div><div style="font-size:10px;color:var(--text3)">Provide tech</div></div></div>
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">🏗️ Prototype</div><div style="font-size:10px;color:var(--text3)">Manufacture</div></div></div>
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">🚀 Pilot deploy</div><div style="font-size:10px;color:var(--text3)">Real world</div></div></div>
+        <div class="pay-opt" onclick="this.classList.toggle('sel')"><div><div style="font-size:12px;font-weight:700">💼 CSR partner</div><div style="font-size:10px;color:var(--text3)">CSR funding</div></div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:5px">Solar water purifier — NIT JSR student</div>
+        <div class="tr" style="margin-bottom:7px"><span class="badge bb">Water</span><span class="badge ba">Patent pending</span><span class="badge bp">Rahul K · Score: 2,840</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:9px">500L/day, 80W solar. Tested 2 villages. Ready for pilot manufacturing.</div>
+        <div class="g3" style="margin-bottom:9px">
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:800;color:var(--green)">2.4K</div><div style="font-size:9px;color:var(--text3)">beneficiaries</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:800;color:var(--blue)">₹80K</div><div style="font-size:9px;color:var(--text3)">cost/unit</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:7px;text-align:center"><div style="font-size:13px;font-weight:800;color:var(--amber)">A+</div><div style="font-size:9px;color:var(--text3)">grade</div></div>
+        </div>
+        <button class="btn btn-g btn-full" onclick="toast('Partnership request sent!')">Partner with this team →</button>
+      </div>
+    </div>
+    <div id="ind-inno" style="display:none">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Top student innovations this year — ranked by impact score</div>
+      <div class="card" style="padding:10px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><div style="font-weight:700;font-size:12px">🥇 Solar water purifier</div><span class="badge bg">Score: 2,840</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:5px">Rahul Kumar · NIT JSR · CSE · 2,400 people · Patent filed</div>
+        <div style="display:flex;gap:5px"><span class="badge bb">Water</span><span class="badge ba">Patent pending</span></div>
+        <button class="btn btn-g btn-sm" style="margin-top:7px" onclick="toast('Interest sent!')">Connect</button>
+      </div>
+      <div class="card" style="padding:10px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><div style="font-weight:700;font-size:12px">🥈 Bamboo crop storage</div><span class="badge bg">Score: 2,100</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:5px">Rohan Singh · BAU Ranchi · Agriculture · 340 farmers</div>
+        <div style="display:flex;gap:5px"><span class="badge bg">Agriculture</span><span class="badge bx">Field tested</span></div>
+        <button class="btn btn-o btn-sm" style="margin-top:7px" onclick="toast('Interest sent!')">Connect</button>
+      </div>
+      <div class="card" style="padding:10px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><div style="font-weight:700;font-size:12px">🥉 Rapid diagnostic kit</div><span class="badge bg">Score: 1,890</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:5px">Dr. A. Mehta student · RIMS · Medical · Govt tested</div>
+        <div style="display:flex;gap:5px"><span class="badge br">Healthcare</span><span class="badge bg">Govt approved</span></div>
+        <button class="btn btn-o btn-sm" style="margin-top:7px" onclick="toast('Interest sent!')">Connect</button>
+      </div>
+      <div class="card" style="padding:10px;margin-bottom:7px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px"><div style="font-weight:700;font-size:12px">#4 Solar irrigation controller</div><span class="badge bg">Score: 1,650</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:5px">Vikram Rao · IIT ISM · Electrical · 500 farmers</div>
+        <button class="btn btn-o btn-sm" style="margin-top:7px" onclick="toast('Interest sent!')">Connect</button>
+      </div>
+    </div>
+    <div id="ind-actv" style="display:none">
+      <div class="card">
+        <div style="font-weight:700;margin-bottom:4px">Water purifier pilot — Ramgarh</div>
+        <div class="tr" style="margin-bottom:7px"><span class="badge bg">Ongoing</span><span class="badge bb">Prototype partner</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:6px">Manufacturing 50 units · Delivery: Nov 2026</div>
+        <div class="fbar" style="height:5px;margin-bottom:3px"><div class="ff" style="width:40%;background:var(--green)"></div></div>
+        <div style="font-size:10px;color:var(--text3)">40% complete</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LOCAL AUTHORITY ===== -->
+<div id="s-local" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">🏘️</div><div><div>Local authority</div><div class="lsub">Ramgarh Panchayat Office</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div class="g3" style="margin-bottom:14px">
+      <div class="stat"><div class="sn" style="color:var(--red)">8</div><div class="sl">In area</div></div>
+      <div class="stat"><div class="sn" style="color:var(--amber)">3</div><div class="sl">My action</div></div>
+      <div class="stat"><div class="sn" style="color:var(--green)">5</div><div class="sl">Resolved</div></div>
+    </div>
+    <div class="sh">Problems in your jurisdiction — Ramgarh</div>
+    <div class="local-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px"><div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Contaminated water — village 3</div><div class="tr"><span class="badge bb">Water</span><span class="badge br">Critical</span></div></div><span class="badge br">Action needed</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">2,400 people · BIT Mesra assigned · You can contribute funds or resources</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn btn-g btn-sm" onclick="toast('₹20,000 contributed from Panchayat fund!')">Contribute ₹20,000</button>
+        <button class="btn btn-b btn-sm" onclick="toast('Official response sent!')">Send official response</button>
+        <button class="btn btn-o btn-sm" onclick="toast('Escalated to BDO!')">Escalate</button>
+      </div>
+    </div>
+    <div class="local-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px"><div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Road repair — NH near school</div><div class="tr"><span class="badge ba">Roads</span><span class="badge ba">High</span></div></div><span class="badge ba">In progress</span></div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:7px">Contractor assigned · Panchayat confirmed land clearance</div>
+      <button class="btn btn-o btn-sm" onclick="toast('Progress report opened')">View progress</button>
+    </div>
+    <div class="sh">Raise a community problem</div>
+    <div class="card">
+      <div class="fg"><label>Problem</label><input type="text" placeholder="Describe the issue in your area"/></div>
+      <div class="fg"><label>Area</label><input type="text" placeholder="Ward / village name"/></div>
+      <button class="btn btn-g btn-sm" onclick="go('s-submit')">Submit on behalf of community →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NGO / MEDIA ===== -->
+<div id="s-ngo" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">❤️</div><div><div>NGO / Media portal</div><div class="lsub">Clean Water India NGO</div></div></div><div class="verify-badge v-ok">✓ Verified</div></div>
+  <div class="pg sec">
+    <div class="tab-row">
+      <div class="tab on" onclick="ngoTab('prob')">Problems</div>
+      <div class="tab" onclick="ngoTab('donate')">Donate</div>
+      <div class="tab" onclick="ngoTab('raise')">Raise issue</div>
+    </div>
+    <div id="ngo-prob">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Browse and contribute to problems</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px"><div style="flex:1"><div style="font-size:13px;font-weight:700;margin-bottom:4px">Contaminated water — Ramgarh</div><div class="tr"><span class="badge bb">Water</span><span class="badge br">Critical</span><span class="badge bg">78% funded</span></div></div></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:7px">2,400 people affected · BIT Mesra working · ₹11,000 still needed</div>
+        <div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="ngoTab('donate')">Donate / contribute</button><button class="btn btn-o btn-sm" onclick="toast('Story flagged for media coverage!')">Cover story</button></div>
+      </div>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">No electricity — Bokaro (6 days)</div>
+        <div class="tr" style="margin-bottom:7px"><span class="badge br">Energy</span><span class="badge br">Critical</span><span class="badge bx">22% funded</span></div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:7px">1,800 people · No response from authority · High media value</div>
+        <div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="ngoTab('donate')">Donate</button><button class="btn btn-b btn-sm" onclick="toast('Flagged as high priority media story!')">Flag media</button></div>
+      </div>
+    </div>
+    <div id="ngo-donate" style="display:none">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Contribute as NGO</div>
+        <div class="fg"><label>Select problem</label><select><option>Contaminated water — Ramgarh</option><option>Broken road — Hazaribagh</option></select></div>
+        <div class="fg"><label>Contribution type</label><select><option>Cash donation</option><option>Volunteer mobilization</option><option>Material/equipment</option><option>Media coverage</option></select></div>
+        <div class="fg"><label>Amount (₹)</label><input type="number" placeholder="Enter amount" id="ngoa" oninput="ngoTax()"/></div>
+        <div id="ngo-tax" style="display:none;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r);padding:9px;margin-bottom:10px;font-size:12px">
+          <div style="font-weight:700;color:var(--green);margin-bottom:4px">Tax benefit (NGO — 50% rebate)</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="color:var(--text2)">Donation</span><span id="ngo-d">₹0</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text2)">Tax rebate (50%)</span><span id="ngo-r" style="color:var(--green);font-weight:700">₹0</span></div>
+        </div>
+        <button class="btn btn-g btn-full" onclick="ngoConfirm()">Donate & get certificate →</button>
+      </div>
+      <div id="ngo-cert-ok" style="display:none" class="card" style="text-align:center">
+        <div style="font-size:32px;margin-bottom:6px">🏅</div>
+        <div style="font-weight:700;margin-bottom:3px">NGO Contribution Certificate</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:7px">Clean Water India NGO<br>Issued by Govt of Jharkhand</div>
+        <button class="btn btn-g btn-sm" onclick="toast('Downloaded!')">Download PDF</button>
+      </div>
+    </div>
+    <div id="ngo-raise" style="display:none">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Raise a community issue</div>
+        <div class="fg"><label>Village / Community</label><input type="text" placeholder="e.g. Tamar village, Ranchi"/></div>
+        <div class="fg"><label>Issue</label><textarea rows="3" placeholder="Describe on behalf of the community..."></textarea></div>
+        <button class="btn btn-g btn-sm" onclick="go('s-submit')">Submit as problem →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GOVERNMENT DASHBOARD ===== -->
+<div id="s-govt" class="screen">
+  <div class="topbar"><div class="logo"><div class="lmark" style="font-size:13px">🏛️</div><div><div>Govt dashboard</div><div class="lsub">Jharkhand — Full access</div></div></div></div>
+  <div class="pg sec">
+    <div class="g4" style="margin-bottom:14px">
+      <div class="stat"><div class="sn" style="color:var(--green)">1,247</div><div class="sl">Total</div></div>
+      <div class="stat"><div class="sn" style="color:#22c55e">384</div><div class="sl">Solved</div></div>
+      <div class="stat"><div class="sn" style="color:var(--blue)">563</div><div class="sl">Active</div></div>
+      <div class="stat"><div class="sn" style="color:var(--red)">3 SOS</div><div class="sl">Villages</div></div>
+    </div>
+    <div class="tab-row">
+      <div class="tab on" onclick="gTab('heat')">District map</div>
+      <div class="tab" onclick="gTab('cat')">Categories</div>
+      <div class="tab" onclick="gTab('inno')">Innovations</div>
+      <div class="tab" onclick="gTab('fund')">Funding</div>
+      <div class="tab" onclick="gTab('impact')">Impact</div>
+    </div>
+
+    <!-- HEATMAP TAB -->
+    <div id="g-heat">
+      <div style="font-size:11px;color:var(--text3);margin-bottom:8px">Problems by district · Tap to drill down</div>
+      <div class="hmap" style="margin-bottom:10px">
+        <div class="hc hc-h" onclick="gDistDetail('Ranchi','287','89','Water,Roads,Health')">Ranchi<br>287</div>
+        <div class="hc hc-h" onclick="gDistDetail('Dhanbad','214','54','Roads,Energy,Water')">Dhanbad<br>214</div>
+        <div class="hc hc-m" onclick="gDistDetail('Bokaro','143','38','Energy,Roads')">Bokaro<br>143</div>
+        <div class="hc hc-m" onclick="gDistDetail('Hazaribagh','121','41','Roads,Education')">Hazari<br>121</div>
+        <div class="hc hc-m" onclick="gDistDetail('Giridih','98','22','Agriculture,Water')">Giridih<br>98</div>
+        <div class="hc hc-l" onclick="gDistDetail('Dumka','76','18','Drainage,Health')">Dumka<br>76</div>
+        <div class="hc hc-l" onclick="gDistDetail('Deoghar','68','15','Education,Water')">Deoghar<br>68</div>
+        <div class="hc hc-l" onclick="gDistDetail('Jamtara','54','12','Agriculture,Roads')">Jamtara<br>54</div>
+        <div class="hc hc-s" onclick="go('s-village')">W.Singh<br>⚠️SOS</div>
+        <div class="hc hc-l" onclick="gDistDetail('Gumla','38','9','Agriculture')">Gumla<br>38</div>
+      </div>
+      <div id="dist-detail" style="display:none" class="card" style="border-color:var(--bbr)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div style="font-weight:700;font-size:14px" id="dd-name">Ranchi</div><button class="btn btn-o btn-sm" onclick="document.getElementById('dist-detail').style.display='none'">✕</button></div>
+        <div class="g3" style="margin-bottom:8px">
+          <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--red)" id="dd-total">287</div><div style="font-size:9px;color:var(--text3)">Total</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--green)" id="dd-solved">89</div><div style="font-size:9px;color:var(--text3)">Solved</div></div>
+          <div style="background:var(--bg3);border-radius:6px;padding:8px;text-align:center"><div style="font-size:16px;font-weight:800;color:var(--amber)" id="dd-rate">31%</div><div style="font-size:9px;color:var(--text3)">Solve rate</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Top categories:</div>
+        <div class="tr" id="dd-cats"></div>
+        <button class="btn btn-g btn-sm" style="margin-top:8px;width:100%;justify-content:center" onclick="toast('Fund released to this district!')">Release funds to this district</button>
+      </div>
+      <div style="display:flex;gap:8px;font-size:10px;color:var(--text3);margin-top:8px;justify-content:center">
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;background:#3f1515;border-radius:2px;display:inline-block"></span>High</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;background:#2d2000;border-radius:2px;display:inline-block"></span>Medium</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;background:#0a2d12;border-radius:2px;display:inline-block"></span>Low</span>
+        <span style="display:flex;align-items:center;gap:3px"><span style="width:10px;height:10px;background:#3f1515;border:1px solid rgba(239,68,68,.8);border-radius:2px;display:inline-block"></span>SOS</span>
+      </div>
+    </div>
+
+    <!-- CATEGORIES TAB -->
+    <div id="g-cat" style="display:none">
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>💧 Water & sanitation</span><span style="color:var(--blue)">324 (26%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:26%;background:var(--blue)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>🛣️ Roads & infrastructure</span><span style="color:var(--amber)">287 (23%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:23%;background:var(--amber)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>🏥 Healthcare</span><span style="color:var(--red)">198 (16%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:16%;background:var(--red)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>📚 Education</span><span style="color:var(--green)">156 (13%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:13%"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>⚡ Energy</span><span style="color:var(--purple)">143 (11%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:11%;background:var(--purple)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px;font-weight:600"><span>🌾 Agriculture</span><span style="color:var(--amber)">139 (11%)</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:11%;background:var(--amber)"></div></div></div>
+      </div>
+    </div>
+
+    <!-- INNOVATIONS TAB — NEW -->
+    <div id="g-inno" style="display:none">
+      <div style="font-size:12px;color:var(--text2);margin-bottom:10px">Top student innovations — verified & ranked by impact</div>
+      <div class="tab-row" style="margin-bottom:10px">
+        <div class="tab on" onclick="innoYear('2026')">2026</div>
+        <div class="tab" onclick="innoYear('2025')">2025</div>
+        <div class="tab" onclick="innoYear('2024')">2024</div>
+      </div>
+      <div id="inno-list">
+        <div class="card" style="padding:11px;margin-bottom:7px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-weight:700;font-size:12px">🥇 Solar water purifier</div><span class="badge bg">Score: 2,840</span></div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Rahul Kumar · NIT JSR · CSE · 2,400 people · Patent filed</div>
+          <div class="tr" style="margin-bottom:7px"><span class="badge bb">Water</span><span class="badge ba">Patent filed</span><span class="badge bg">Tata Projects interested</span></div>
+          <div style="display:flex;gap:5px"><button class="btn btn-g btn-sm" onclick="toast('Funding approved for Rahul Kumar!')">Fund production</button><button class="btn btn-o btn-sm" onclick="toast('Details opened')">Details</button></div>
+        </div>
+        <div class="card" style="padding:11px;margin-bottom:7px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-weight:700;font-size:12px">🥈 Bamboo crop storage</div><span class="badge bg">Score: 2,100</span></div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Rohan Singh · BAU Ranchi · Agriculture · 340 farmers</div>
+          <div class="tr" style="margin-bottom:7px"><span class="badge bg">Agriculture</span><span class="badge bx">Field tested</span></div>
+          <div style="display:flex;gap:5px"><button class="btn btn-g btn-sm" onclick="toast('Funding approved!')">Fund production</button><button class="btn btn-o btn-sm">Details</button></div>
+        </div>
+        <div class="card" style="padding:11px;margin-bottom:7px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><div style="font-weight:700;font-size:12px">🥉 Rapid diagnostic kit</div><span class="badge bg">Score: 1,890</span></div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:4px">Medical student · RIMS · 5,000 patients screened</div>
+          <div class="tr" style="margin-bottom:7px"><span class="badge br">Healthcare</span><span class="badge bg">Govt tested</span></div>
+          <button class="btn btn-g btn-sm" onclick="toast('Production funding approved!')">Fund production</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FUNDING TAB -->
+    <div id="g-fund" style="display:none">
+      <div class="card">
+        <div style="font-size:13px;font-weight:700;margin-bottom:10px">Release government funding</div>
+        <div class="fg"><label>State / District</label><select><option>Jharkhand (all)</option><option>Ranchi</option><option>Dhanbad</option><option>Bokaro</option></select></div>
+        <div class="fg"><label>Category</label><select><option>Water & sanitation</option><option>Roads</option><option>Healthcare</option><option>Education</option><option>Energy</option></select></div>
+        <div class="fg"><label>Amount (₹)</label><input type="number" placeholder="Enter amount"/></div>
+        <button class="btn btn-g btn-full" onclick="toast('₹5,00,000 released! All stakeholders notified.')">Release funds →</button>
+      </div>
+    </div>
+
+    <!-- IMPACT TAB -->
+    <div id="g-impact" style="display:none">
+      <div class="g2" style="margin-bottom:12px">
+        <div class="stat"><div class="sn" style="color:var(--green)">48K</div><div class="sl">People helped</div></div>
+        <div class="stat"><div class="sn" style="color:var(--purple)">12</div><div class="sl">Patents filed</div></div>
+        <div class="stat"><div class="sn" style="color:var(--amber)">7</div><div class="sl">Startups born</div></div>
+        <div class="stat"><div class="sn" style="color:var(--blue)">234</div><div class="sl">Jobs created</div></div>
+      </div>
+      <div class="card">
+        <div class="sh" style="margin-bottom:9px">Recent impact</div>
+        <div class="inno-row"><div class="iico" style="background:var(--gbg)">💧</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Clean water — Lohardaga</div><div style="font-size:10px;color:var(--text3)">1,200 people · BIT Mesra</div></div><span class="badge bg">Done</span></div>
+        <div class="inno-row"><div class="iico" style="background:var(--abg)">🛣️</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Road fixed — Hazaribagh school</div><div style="font-size:10px;color:var(--text3)">400 children · Contractor</div></div><span class="badge bg">Done</span></div>
+        <div class="inno-row"><div class="iico" style="background:var(--bbg)">☀️</div><div style="flex:1"><div style="font-size:12px;font-weight:700">Solar school — Simdega</div><div style="font-size:10px;color:var(--text3)">3 schools · IIT ISM</div></div><span class="badge ba">Active</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px"><button class="btn btn-r btn-full" onclick="go('s-village')"><i class="ti ti-alert-triangle"></i> Village SOS alerts (3)</button></div>
+  </div>
+</div>
+
+<!-- ===== VILLAGE SOS ===== -->
+<div id="s-village" class="screen">
+  <div class="topbar"><button class="btn btn-o btn-sm" onclick="go('s-govt')"><i class="ti ti-arrow-left"></i></button><div style="font-weight:700">Village SOS</div><div style="width:60px"></div></div>
+  <div class="pg sec">
+    <div class="alert-box">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:7px"><div style="font-size:18px">🚨</div><div style="font-weight:800;font-size:14px;color:var(--red)">Critical — underdeveloped village</div></div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:3px">Sonua village — West Singhbhum</div>
+      <div style="font-size:12px;color:var(--text2);margin-bottom:8px">Population: 847 · Literacy: 0% · No road · No doctor · No electricity</div>
+      <div class="tr"><span class="badge br">Zero literacy</span><span class="badge br">No healthcare</span><span class="badge ba">No electricity</span><span class="badge ba">No road</span></div>
+    </div>
+    <div class="sh">Auto-alerts sent to all stakeholders</div>
+    <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--rbg);border:1px solid var(--rbr);border-radius:var(--r)"><span style="font-size:15px">🏛️</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Government — Priority 1</div><div style="font-size:10px;color:var(--text3)">CM · Collector · BDO · 5 depts.</div></div><span class="badge br">Sent</span></div>
+      <div style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--gbg);border:1px solid var(--gbr);border-radius:var(--r)"><span style="font-size:15px">🎓</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Universities — 6 domains</div><div style="font-size:10px;color:var(--text3)">Engg · Medical · Agri · Teaching · Business · Env.</div></div><span class="badge bg">Sent</span></div>
+      <div style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--bbg);border:1px solid var(--bbr);border-radius:var(--r)"><span style="font-size:15px">🏭</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Industry / CSR — 12 companies</div><div style="font-size:10px;color:var(--text3)">Tata · JSPL · SAIL CSR · NGOs</div></div><span class="badge bb">Sent</span></div>
+      <div style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--abg);border:1px solid var(--abr);border-radius:var(--r)"><span style="font-size:15px">🏘️</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Local authority — Panchayat + Police</div><div style="font-size:10px;color:var(--text3)">Block panchayat + PS Chaibasa</div></div><span class="badge ba">Sent</span></div>
+      <div style="display:flex;align-items:center;gap:9px;padding:9px;background:var(--abg);border:1px solid var(--abr);border-radius:var(--r)"><span style="font-size:15px">📰</span><div style="flex:1"><div style="font-weight:700;font-size:12px">Media — 4 outlets</div><div style="font-size:10px;color:var(--text3)">Prabhat Khabar · DD Jharkhand</div></div><span class="badge ba">Sent</span></div>
+    </div>
+    <div class="sh">Village development score</div>
+    <div class="vill-bar"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>🏗️ Infrastructure</span><span style="color:var(--red)">0%</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:0%"></div></div></div>
+    <div class="vill-bar"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>🏥 Healthcare</span><span style="color:var(--red)">0%</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:0%;background:var(--red)"></div></div></div>
+    <div class="vill-bar"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>📚 Education</span><span style="color:var(--red)">0%</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:0%;background:var(--blue)"></div></div></div>
+    <div class="vill-bar"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>🌾 Agriculture</span><span style="color:var(--amber)">12%</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:12%;background:var(--amber)"></div></div></div>
+    <div class="vill-bar"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600"><span>💼 Livelihood</span><span style="color:var(--red)">0%</span></div><div class="fbar" style="height:5px"><div class="ff" style="width:0%;background:var(--purple)"></div></div></div>
+    <div style="margin-top:10px"><button class="btn btn-g btn-full" onclick="toast('Adopt-a-Village launched! All stakeholders mobilized.')">Launch Adopt-a-Village program →</button></div>
+  </div>
+</div>
+
+<script>
+let cur='s-land';
+let aiT=null;
+
+function go(id){
+  document.getElementById(cur).classList.remove('active');
+  const el=document.getElementById(id);
+  if(el){el.classList.add('active');cur=id;window.scrollTo(0,0);}
+}
+
+function loginAs(t){
+  const m={citizen:'s-submit',student:'s-student',university:'s-univ',professional:'s-professional',contractor:'s-contractor',industry:'s-industry',local:'s-local',ngo:'s-ngo',govt:'s-govt'};
+  go(m[t]||'s-land');
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',2800);
+}
+
+const cats={
+  water:['💧 Water & sanitation','Critical','br','3 similar health emergencies nearby. Multi-routed to BIT Mesra + Industry + Govt.','→ BIT Mesra Civil · ColdStar Ltd · Agriculture Dept notified'],
+  road:['🛣️ Roads & infrastructure','High priority','ba','4 citizens reported same stretch. PWD + civil engineers alerted.','→ BIT Mesra Civil · PWD JH · 2 contractors alerted'],
+  health:['🏥 Healthcare','Critical','br','Medical access affected. Medical colleges notified.','→ RIMS Ranchi · MGM Medical · District health officer'],
+  school:['📚 Education','Medium','bb','Children access affected. Teaching university notified.','→ RU Ranchi · District education officer'],
+  electric:['⚡ Energy','Critical','br','6+ days power cut — emergency. IIT ISM + JSEB notified.','→ IIT ISM Dhanbad · JSEB · Energy dept'],
+  farm:['🌾 Agriculture','Medium','ba','Crop issue detected. BAU Ranchi + nearest cold storage alerted.','→ BAU Ranchi · ColdStar (47km) · PM Cold Chain scheme'],
+  drain:['🌊 Drainage & flood','High priority','ba','Monsoon risk. Drainage design team forming.','→ BIT Mesra · Municipal dept · NGO Water India']
+};
+
+function aiRun(){
+  const txt=((document.getElementById('pt')||{}).value||'')+' '+((document.getElementById('pd')||{}).value||'');
+  clearTimeout(aiT);
+  const box=document.getElementById('ai-box');if(!box)return;
+  if(txt.trim().length<4){box.style.display='none';return;}
+  box.style.display='block';
+  ['ac','ap','aw','at'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent='';});
+  document.getElementById('ar').style.display='none';
+  document.getElementById('aib').style.display='inline-block';
+  aiT=setTimeout(()=>{
+    const t=txt.toLowerCase();
+    let c=cats.farm;
+    if(t.includes('water')||t.includes('paani')||t.includes('peene')||t.includes('drinking')||t.includes('pani'))c=cats.water;
+    else if(t.includes('road')||t.includes('sadak')||t.includes('path')||t.includes('pothole'))c=cats.road;
+    else if(t.includes('health')||t.includes('hospital')||t.includes('doctor')||t.includes('medical'))c=cats.health;
+    else if(t.includes('school')||t.includes('education')||t.includes('padhai'))c=cats.school;
+    else if(t.includes('electric')||t.includes('bijli')||t.includes('light')||t.includes('power')||t.includes('energy'))c=cats.electric;
+    else if(t.includes('drain')||t.includes('flood')||t.includes('barish')||t.includes('monsoon'))c=cats.drain;
+    document.getElementById('aib').style.display='none';
+    document.getElementById('ac').textContent=c[0];
+    const p=document.getElementById('ap');p.textContent=c[1];p.className='badge '+c[2];
+    document.getElementById('aw').textContent=c[3];
+    document.getElementById('at').textContent=c[4];
+    document.getElementById('ar').style.display='inline-flex';
+  },900);
+}
+
+function getGps(){
+  const btn=document.getElementById('gpsb');
+  btn.innerHTML='<i class="ti ti-loader"></i> Locating...';btn.disabled=true;
+  const done=(lat,lon,lbl)=>{
+    document.getElementById('gtxt').textContent='GPS: '+lat+'°N, '+lon+'°E — '+lbl;
+    document.getElementById('gok').style.display='block';
+    document.getElementById('mb').style.display='block';
+    document.getElementById('ml').textContent=lbl;
+    btn.innerHTML='<i class="ti ti-check"></i> Location captured';
+    btn.style.color='var(--green)';btn.style.borderColor='var(--gbr)';
+  };
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      p=>done(p.coords.latitude.toFixed(4),p.coords.longitude.toFixed(4),'Your location'),
+      ()=>done('23.3441','85.3096','Ranchi, Jharkhand')
+    );
+  } else setTimeout(()=>done('23.3441','85.3096','Ranchi, Jharkhand'),1000);
+}
+
+function prevPh(inp){
+  if(inp.files&&inp.files[0]){
+    const r=new FileReader();
+    r.onload=e=>{
+      const img=document.getElementById('php');
+      img.src=e.target.result;img.style.display='block';
+      document.getElementById('phl').textContent='✓ '+inp.files[0].name;
+      document.getElementById('phb').classList.add('filled');
+    };
+    r.readAsDataURL(inp.files[0]);
+  }
+}
+
+function prevVid(inp){
+  if(inp.files&&inp.files[0]){
+    document.getElementById('vl').textContent='✓ '+inp.files[0].name;
+    document.getElementById('vb').classList.add('filled');
+  }
+}
+
+function submitProb(){
+  const toks=['PRB-JH-2026-1847','PRB-JH-2026-2041','PRB-JH-2026-3192','PRB-JH-2026-4487'];
+  document.getElementById('tok').textContent=toks[Math.floor(Math.random()*toks.length)];
+  go('s-token');
+}
+
+function openDonate(){document.getElementById('dbox').style.display='block';}
+function setAmt(a){document.getElementById('da').value=a;upTax();}
+function upTax(){
+  const a=parseInt(document.getElementById('da').value)||0;
+  if(a>0){
+    const reb=Math.round(a*.3);
+    document.getElementById('tbox').style.display='block';
+    document.getElementById('td1').textContent='₹'+a.toLocaleString('en-IN');
+    document.getElementById('tr1').textContent='₹'+reb.toLocaleString('en-IN');
+    document.getElementById('tn1').textContent='₹'+(a-reb).toLocaleString('en-IN');
+  }
+}
+function confirmDonate(){
+  const a=parseInt(document.getElementById('da').value)||5000;
+  const reb=Math.round(a*.3);
+  document.getElementById('ca').textContent='₹'+a.toLocaleString('en-IN');
+  document.getElementById('cr').textContent='₹'+reb.toLocaleString('en-IN');
+  document.getElementById('crk').textContent=a>=50000?'💎':a>=10000?'🥇':a>=2000?'🥈':'🥉';
+  go('s-cert');
+}
+
+function stTab(t){
+  ['open','mine','cert','field'].forEach(x=>{const e=document.getElementById('st-'+x);if(e)e.style.display=x===t?'block':'none';});
+  document.querySelectorAll('#s-student .tab').forEach((el,i)=>el.classList.toggle('on',['open','mine','cert','field'][i]===t));
+}
+function joinProj(){toast('Joined! Project room access granted. Team notified.');}
+
+function indTab(t){
+  ['disc','inno','actv'].forEach(x=>{const e=document.getElementById('ind-'+x);if(e)e.style.display=x===t?'block':'none';});
+  document.querySelectorAll('#s-industry .tab').forEach((el,i)=>el.classList.toggle('on',['disc','inno','actv'][i]===t));
+}
+
+function gTab(t){
+  ['heat','cat','inno','fund','impact'].forEach(x=>{const e=document.getElementById('g-'+x);if(e)e.style.display=x===t?'block':'none';});
+  document.querySelectorAll('#s-govt .tab').forEach((el,i)=>el.classList.toggle('on',['heat','cat','inno','fund','impact'][i]===t));
+}
+
+function gDistDetail(name,total,solved,cats){
+  const d=document.getElementById('dist-detail');
+  d.style.display='block';
+  document.getElementById('dd-name').textContent=name+' district';
+  document.getElementById('dd-total').textContent=total;
+  document.getElementById('dd-solved').textContent=solved;
+  document.getElementById('dd-rate').textContent=Math.round(parseInt(solved)/parseInt(total)*100)+'%';
+  const cc=document.getElementById('dd-cats');
+  cc.innerHTML='';
+  cats.split(',').forEach(c=>{
+    const s=document.createElement('span');
+    const cls={Water:'bb',Roads:'ba',Health:'br',Energy:'bp',Agriculture:'bg',Education:'bb',Drainage:'bb'}[c]||'bx';
+    s.className='badge '+cls;s.textContent=c;cc.appendChild(s);
+  });
+}
+
+function innoYear(y){
+  document.querySelectorAll('#g-inno .tab').forEach((el,i)=>el.classList.toggle('on',['2026','2025','2024'][i]===y));
+  toast('Showing top innovations for '+y);
+}
+
+function ngoTab(t){
+  ['prob','donate','raise'].forEach(x=>{const e=document.getElementById('ngo-'+x);if(e)e.style.display=x===t?'block':'none';});
+  document.querySelectorAll('#s-ngo .tab').forEach((el,i)=>el.classList.toggle('on',['prob','donate','raise'][i]===t));
+}
+function ngoTax(){
+  const a=parseInt(document.getElementById('ngoa').value)||0;
+  if(a>0){
+    document.getElementById('ngo-tax').style.display='block';
+    document.getElementById('ngo-d').textContent='₹'+a.toLocaleString('en-IN');
+    document.getElementById('ngo-r').textContent='₹'+Math.round(a*.5).toLocaleString('en-IN');
+  }
+}
+function ngoConfirm(){
+  document.getElementById('ngo-cert-ok').style.display='block';
+  toast('Donation confirmed! Certificate generated.');
+}
+function contrApply(){document.getElementById('cok').style.display='block';toast('Application submitted!');}
+</script>
+</body>
+</html>
